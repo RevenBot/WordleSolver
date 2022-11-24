@@ -1,39 +1,30 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.Maui.Controls;
-using System.Threading.Tasks;
-using System.Runtime.CompilerServices;
+﻿using System.Diagnostics;
+using System.IO;
 
 namespace WordleSolver.Data
 {
-    public sealed class ReadFileService
+    public static class ReadFileService
     {
-        private static List<Word> wordList = null;
-        public ReadFileService()
+        private static List<string> wordList = null;
+        public static async Task<List<string>> GetWordsListAsync(string path)
         {
-        }
-
-        public static async Task<List<Word>> GetWordsListAsync(string path)
-        {
-
-            if(wordList == null)
+            if (wordList != null)
             {
-            using var stream = await FileSystem.OpenAppPackageFileAsync(path);
-            using var reader = new StreamReader(stream);
-            var data = await reader.ReadToEndAsync();
-            wordList = data.Split("\n").Select(i=>new Word
-            {
-                StringWord= i,
-            }).ToList();
+                Debug.WriteLine("File already loaded");
                 return wordList;
             }
-            else
+
+            try
             {
+                using var stream = await FileSystem.OpenAppPackageFileAsync(path);
+                using var reader = new StreamReader(stream);
+                var data = await reader.ReadToEndAsync();
+                wordList = data.Split("\n").Select(i => i).ToList();
                 return wordList;
+            }
+            catch (FileNotFoundException ex) {
+                Debug.WriteLine(ex);
+                throw ex;
             }
         }
     }
