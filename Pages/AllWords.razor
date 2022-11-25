@@ -26,12 +26,12 @@ else
 		{
 			<li class="list-group-item d-flex justify-content-between align-items-start">
 				<div class="ms-2 me-auto">
-					<div class="fw-bold">Letter <strong>@groupedWords.Key</strong></div>
+					<div class="fw-bold">Letter <strong>@groupedWords.Key</strong>:</div>
 					<ul class="list-group">
 						@foreach (var word in groupedWords)
 						{
 							<li class="list-group-item">
-								@word
+								@word.Value
 							</li>
 						}
 					</ul>
@@ -43,7 +43,7 @@ else
 }
 
 @code {
-	public IEnumerable<IGrouping<char, string>> groupedByLetter;
+	public IEnumerable<IGrouping<char, IWord>> groupedByLetter;
 	private bool brokenData = false;
 
 	protected override async Task OnInitializedAsync()
@@ -51,10 +51,10 @@ else
 		Debug.WriteLine("Trying to read the txt file");
 		try
 		{
-			List<string> rawData = await ReadFileService.GetWordsListAsync("words.txt");
+			List<IWord> rawData = await ReadFileService.GetWordsListAsync("words.txt");
 			groupedByLetter =
 				from word in rawData
-				group word by word[0];
+				group word by word.Value[0];
 		}
 		catch (FileNotFoundException)
 		{
