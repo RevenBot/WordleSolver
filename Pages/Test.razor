@@ -6,7 +6,6 @@
 @using WordleSolver.Data
 @using System.Diagnostics
 @inject IDialogService DialogService
-@inject ReadFileService ReadFile
 <h1>Static Asset Example</h1>
 <button @onclick="AlertOpen">Alert</button>
 @if (word == null)
@@ -20,7 +19,7 @@ else
 <p role="status">Current count: </p>
 
 @*<button class="btn btn-primary" @ @onclick="Testing">Click me</button>*@
-@*@if (list == null)
+@if (list == null)
 {
     <p>okading</p>
 }
@@ -30,10 +29,10 @@ else
     @foreach (var item in list)
     {
         <p>
-            @item.StringWord
+            @item.Value
         </p>
     }
-}*@
+}
 <table class="table table-bordered table-danger">
     <thead>
     <tr>
@@ -56,7 +55,7 @@ else
 }
 
 @code {
-    public List<Word> list;
+    public List<IWord> list;
     protected override async Task OnInitializedAsync()
     {
         try
