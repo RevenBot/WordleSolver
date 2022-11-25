@@ -4,23 +4,57 @@
 @using Microsoft.Extensions.Logging
 @using Microsoft.Maui.Storage
 @using WordleSolver.Data
-@using System.Diagnostics;
+@using System.Diagnostics
+@inject IDialogService DialogService
 @inject ReadFileService ReadFile
 <h1>Static Asset Example</h1>
+<button @onclick="AlertOpen">Alert</button>
+@if (word == null)
+{
+    <p>Waiting Word</p>
+}
+else
+{
+    <p>@word</p>
+}
+<p role="status">Current count: </p>
 
-@if( list == null)
+@*<button class="btn btn-primary" @ @onclick="Testing">Click me</button>*@
+@*@if (list == null)
 {
     <p>okading</p>
 }
 else
 {
-    
-@foreach (var item in list)
+
+    @foreach (var item in list)
+    {
+        <p>
+            @item.StringWord
+        </p>
+    }
+}*@
+<table class="table table-bordered table-danger">
+    <thead>
+    <tr>
+
+        @for (var i = 0; i < list2.Count; i++)
+        {
+            int index = i;
+        <th scope="col" @onclick="()=>ClickedCell(list2[index])"> @list2[i]</th>
+        }
+    </tr>
+    </thead>
+</table>
+@if (Selected != null)
 {
-    @item.StringWord
-    @item.GetType()
+    <p>You clicked @Selected !</p>
 }
+else
+{
+    <p>Click a row..</p>
 }
+
 @code {
     public List<Word> list;
     protected override async Task OnInitializedAsync()
@@ -28,11 +62,24 @@ else
         try
         {
             list = await ReadFileService.GetWordsListAsync("words.txt");
-            list = await ReadFileService.GetWordsListAsync("words.txt");
-
         }
         catch (FileNotFoundException e)
         {
         }
+    }
+    string Selected = null;
+    List<string> list2 = new List<string>()
+    {
+        "a","b","c","d","e"
+    };
+    public void ClickedCell(string s)
+    {
+        Selected = s;
+    }
+    string word = "start";
+    private async Task AlertOpen()
+    {
+        //var result = await DialogService.DisplayConfirm("TEST", "ciao", "ok", "cancel");
+        word = await DialogService.DisplayPromptAsync("WORD", "insert word", "ok", "cancel", "hello");
     }
 }

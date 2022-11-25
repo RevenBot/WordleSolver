@@ -26,6 +26,7 @@ public static class MauiProgram
 
 		builder.Services.AddSingleton<ReadFileService>();
 
+		builder.Services.AddSingleton<IDialogService, DialogService>();
 		return builder.Build();
 	}
 }
