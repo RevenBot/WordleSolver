@@ -22,6 +22,7 @@ namespace WordleSolver.Data
 				foreach (string s in data.Split("\n")) {
 					wordsList.Add(new Word(s)); 
 				}
+				wordsList.Sort();
 
 				Debug.WriteLine("File read successfully");
 				return wordsList;

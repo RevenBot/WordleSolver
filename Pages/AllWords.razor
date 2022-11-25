@@ -43,7 +43,7 @@ else
 }
 
 @code {
-	public IEnumerable<IGrouping<char, IWord>> groupedByLetter;
+	private IEnumerable<IGrouping<char, IWord>> groupedByLetter;
 	private bool brokenData = false;
 
 	protected override async Task OnInitializedAsync()
