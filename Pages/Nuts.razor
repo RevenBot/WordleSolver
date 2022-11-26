@@ -1,0 +1,47 @@
+﻿@page "/nuts"
+<h3>Nuts</h3>
+@using WordleSolver.Data
+<button @onclick="()=>board.LoadData()" >Load Data</button>
+<button @onclick="()=>board.Reset()" >Load Data</button>
+<table>
+    <tbody>
+        @foreach (var row in board.Rows)
+        {
+            <tr>
+                <th scope="col">
+                    <button @onclick="()=>board.EnterWord(row)">Insert Text</button>
+                </th>
+                @foreach(var cell in row.Letters)
+                {
+                <th>
+
+                    <button @onclick="()=>row.ClickedCell(cell)">@cell.Value = @cell.Type</button>
+                </th>
+                }
+                <th>
+                    <button @onclick="()=>board.Calculate(row)">Calculate</button>
+                </th>
+            </tr>
+        }
+    </tbody>
+</table>
+@if(board.Words == null)
+{
+    <p>
+        Loading...maybe not is working
+    </p>
+}
+else
+{
+    @foreach (var item in board.Words)
+    {
+        <p>
+            @item.Value
+        </p>
+    }
+}
+
+@code {
+    IBoard board = new Board();
+
+}
