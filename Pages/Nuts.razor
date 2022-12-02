@@ -1,34 +1,33 @@
 ﻿@page "/nuts"
 <h3>Nuts</h3>
-@using WordleSolver.Data
-<button @onclick="()=>board.LoadData()" >Load Data</button>
-<button @onclick="()=>board.Reset()" >Load Data</button>
-<table>
+@using WordleSolver.Data.Wordle;
+<button @onclick="()=>board.Reset()">Reset Data</button>
+<table id="table">
     <tbody>
         @foreach (var row in board.Rows)
         {
-            <tr>
-                <th scope="col">
+            <tr class="@row.CssClass">
+                <td scope="col">
                     <button @onclick="()=>board.EnterWord(row)">Insert Text</button>
-                </th>
-                @foreach(var cell in row.Letters)
+                </td>
+                @foreach (var cell in row.Letters)
                 {
-                <th>
+                    <td>
 
-                    <button @onclick="()=>row.ClickedCell(cell)">@cell.Value = @cell.Type</button>
-                </th>
+                        <button class="@cell.CssClass" @onclick="()=>row.ClickedCell(cell)">@cell.Value</button>
+                    </td>
                 }
-                <th>
+                <td>
                     <button @onclick="()=>board.Calculate(row)">Calculate</button>
-                </th>
+                </td>
             </tr>
         }
     </tbody>
 </table>
-@if(board.Words == null)
+@if (board.Words == null)
 {
     <p>
-        Loading...maybe not is working
+        Loading...maybe 
     </p>
 }
 else
@@ -43,5 +42,9 @@ else
 
 @code {
     IBoard board = new Board();
+    protected override async Task OnInitializedAsync()
+    {
+      await board.LoadData();
+    }
 
 }

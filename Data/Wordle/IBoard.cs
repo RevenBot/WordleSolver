@@ -1,4 +1,4 @@
-﻿namespace WordleSolver.Data
+﻿namespace WordleSolver.Data.Wordle
 {
     public interface IBoard
     {
@@ -6,7 +6,7 @@
         public List<IRow> Rows { get; set; }
         public IDialogService Dialog { get; set; }
         public void Calculate(IRow row);
-        public void LoadData();
+        public Task LoadData();
         public void Reset();
         public Task EnterWord(IRow row);
     }

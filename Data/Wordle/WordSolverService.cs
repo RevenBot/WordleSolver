@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WordleSolver.Data
+namespace WordleSolver.Data.Wordle
 {
     public class WordSolverService : IWordSolverService
     {
@@ -50,7 +50,7 @@ namespace WordleSolver.Data
         {
             return Task.FromResult(words.Where(
                     x => x.Value.IndexOfAny(charsNotIn.ToArray()) == -1
-                    ).ToList().ToList<IWord>()
+                    ).ToList().ToList()
             );
         }
 
@@ -66,8 +66,8 @@ namespace WordleSolver.Data
         {
             return Task.FromResult(
                 words.Where(x => CheckYellow(x)
-                    ).ToList<IWord>()
-                ) ;
+                    ).ToList()
+                );
         }
 
         private bool CheckYellow(IWord x)
@@ -95,8 +95,8 @@ namespace WordleSolver.Data
         public Task<List<IWord>> CharGreenInWordAsync()
         {
             return Task.FromResult(
-                words.Where(x=> CheckGreen(x))
-                .ToList<IWord>()
+                words.Where(x => CheckGreen(x))
+                .ToList()
                 );
         }
 
@@ -124,11 +124,11 @@ namespace WordleSolver.Data
             CharGreenInWord();
             Debug.WriteLine("sync running for {0} s ", sw.Elapsed.TotalSeconds);
             Cleaner();
-            Debug.WriteLine("Done--Words {0}",words.Count());
+            Debug.WriteLine("Done--Words {0}", words.Count());
         }
         public void Cleaner()
         {
-            yellowChars.Clear();
+            charsNotIn.Clear();
             greenChars.Clear();
             yellowChars.Clear();
         }
@@ -136,15 +136,15 @@ namespace WordleSolver.Data
         {
             var sw = new Stopwatch();
             sw.Start();
-            Debug.WriteLine("Start async = Words {0}",words.Count);
+            Debug.WriteLine("Start async = Words {0}", words.Count);
             Debug.WriteLine("async running for {0} s ", sw.Elapsed.TotalSeconds);
-            var delay =Task.Delay(5000);
+            var delay = Task.Delay(5000);
             var resultNotIn = ExcludeCharsNotInAsync();
             var resultYellowAt = ExcludeYellowCharsAsync();
             var resultGreenAt = CharGreenInWordAsync();
-            var result = await Task.WhenAll(resultNotIn,resultYellowAt, resultGreenAt);
+            var result = await Task.WhenAll(resultNotIn, resultYellowAt, resultGreenAt);
             var data = result[0].Intersect(result[1]).Intersect(result[2]);
-            words = data.ToList<IWord>();
+            words = data.ToList();
             await delay;
             Debug.WriteLine("async running for {0} s ", sw.Elapsed.TotalSeconds);
             Cleaner();
