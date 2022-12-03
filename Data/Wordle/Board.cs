@@ -76,9 +76,9 @@ namespace WordleSolver.Data.Wordle
             }
         }
 
-        public void Reset()
+        public async Task Reset()
         {
-            LoadData();
+            await LoadData();
             Rows = new List<IRow>()
             {
                 new Row(){IsActive = true},

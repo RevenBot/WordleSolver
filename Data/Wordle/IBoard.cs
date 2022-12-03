@@ -7,7 +7,7 @@
         public IDialogService Dialog { get; set; }
         public void Calculate(IRow row);
         public Task LoadData();
-        public void Reset();
+        public Task Reset();
         public Task EnterWord(IRow row);
     }
 }
