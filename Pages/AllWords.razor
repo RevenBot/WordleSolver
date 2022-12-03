@@ -4,61 +4,61 @@
 @using Microsoft.Extensions.Logging
 @using Microsoft.Maui.Storage
 @using System.Collections;
-@using WordleSolver.Data
+@using WordleSolver.Data.Wordle;
 @using System.Diagnostics;
 
 <h1 class="text-success">
-	<strong>All the words we have avaiable:</strong>
+    <strong>All the words we have avaiable:</strong>
 </h1>
 
 @if (brokenData)
 {
-	<h1 class="text-primary">Sadly our data is <em>broken</em> right now...</h1>
+    <h1 class="text-primary">Sadly our data is <em>broken</em> right now...</h1>
 }
 else if (groupedByLetter == null)
 {
-	<p>Loading your data hold tight...</p>
+    <p>Loading your data hold tight...</p>
 }
 else
 {
-	<ol class="list-group list-group-numbered">
-		@foreach (var groupedWords in groupedByLetter)
-		{
-			<li class="list-group-item d-flex justify-content-between align-items-start">
-				<div class="ms-2 me-auto">
-					<div class="fw-bold">Letter <strong>@groupedWords.Key</strong>:</div>
-					<ul class="list-group">
-						@foreach (var word in groupedWords)
-						{
-							<li class="list-group-item">
-								@word.Value
-							</li>
-						}
-					</ul>
-				</div>
-				<span class="badge bg-primary rounded-pill">@groupedWords.Count()</span>
-			</li>			
-		}
-	</ol>
+    <ol class="list-group list-group-numbered">
+        @foreach (var groupedWords in groupedByLetter)
+        {
+            <li class="list-group-item d-flex justify-content-between align-items-start">
+                <div class="ms-2 me-auto">
+                    <div class="fw-bold">Letter <strong>@groupedWords.Key</strong>:</div>
+                    <ul class="list-group">
+                        @foreach (var word in groupedWords)
+                        {
+                            <li class="list-group-item">
+                                @word.Value
+                            </li>
+                        }
+                    </ul>
+                </div>
+                <span class="badge bg-primary rounded-pill">@groupedWords.Count()</span>
+            </li>
+        }
+    </ol>
 }
 
 @code {
-	private IEnumerable<IGrouping<char, IWord>> groupedByLetter;
-	private bool brokenData = false;
+    private IEnumerable<IGrouping<char, IWord>> groupedByLetter;
+    private bool brokenData = false;
 
-	protected override async Task OnInitializedAsync()
-	{
-		Debug.WriteLine("Trying to read the txt file");
-		try
-		{
-			List<IWord> rawData = await ReadFileService.GetWordsListAsync("words.txt");
-			groupedByLetter =
-				from word in rawData
-				group word by word.Value[0];
-		}
-		catch (FileNotFoundException)
-		{
-			brokenData = true;
-		}
-	}
+    protected override async Task OnInitializedAsync()
+    {
+        Debug.WriteLine("Trying to read the txt file");
+        try
+        {
+            List<IWord> rawData = await ReadFileService.GetWordsListAsync("words.txt");
+            groupedByLetter =
+                from word in rawData
+                group word by word.Value[0];
+        }
+        catch (FileNotFoundException)
+        {
+            brokenData = true;
+        }
+    }
 }
