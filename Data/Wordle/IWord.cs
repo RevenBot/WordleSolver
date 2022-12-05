@@ -1,13 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace WordleSolver.Data.Wordle
+﻿namespace WordleSolver.Data.Wordle
 {
-    public interface IWord
-    {
-        public string Value { get; set; }
-    }
+	public interface IWord
+	{
+		public string Value { get; set; }
+	}
 }
