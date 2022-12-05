@@ -25,8 +25,8 @@ namespace WordleSolver.Data.Wordle
                 }
                 wordsList.Sort();
 
-                Debug.WriteLine("File read successfully");
-                return wordsList;
+                await Utilities.CreateToast($"Succesfully read {wordsList.Count} words");
+				return wordsList;
             }
             catch (FileNotFoundException ex)
             {
