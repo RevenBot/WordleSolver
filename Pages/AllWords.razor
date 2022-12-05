@@ -21,20 +21,33 @@ else if (groupedByLetter == null)
 }
 else
 {
+    <label for="check">Collapse lists</label>
+    <input type="checkbox" name="check" id="check" checked="checked" @onchange="SwitchVerbose" />
     <ol class="list-group list-group-numbered">
-        @foreach (var groupedWords in groupedByLetter)
+        @for (int i = 0; i < groupedByLetter.Count(); i++)
         {
+            IGrouping<char, IWord> groupedWords = groupedByLetter.ElementAt(i);
             <li class="list-group-item d-flex justify-content-between align-items-start">
                 <div class="ms-2 me-auto">
                     <div class="fw-bold">Letter <strong>@groupedWords.Key</strong>:</div>
-                    <ul class="list-group">
-                        @foreach (var word in groupedWords)
-                        {
-                            <li class="list-group-item">
-                                @word.Value
-                            </li>
-                        }
-                    </ul>
+                    @if (verbose)
+                    {
+                        <ul class="list-group">
+                            @foreach (var word in groupedWords)
+                            {
+                                <li class="list-group-item">
+                                    @word.Value
+                                </li>
+                            }
+                        </ul>
+                    }
+                    else 
+                    {
+                        <p>
+                            This list is currenty collapsed!
+                            It would contain <strong>@groupedWords.Count()</strong> elements
+                        </p>
+                    }
                 </div>
                 <span class="badge bg-primary rounded-pill">@groupedWords.Count()</span>
             </li>
@@ -44,7 +57,9 @@ else
 
 @code {
     private IEnumerable<IGrouping<char, IWord>> groupedByLetter;
+    private List<bool> isCollapsed;
     private bool brokenData = false;
+    private bool verbose = false;
 
     protected override async Task OnInitializedAsync()
     {
@@ -55,10 +70,21 @@ else
             groupedByLetter =
                 from word in rawData
                 group word by word.Value[0];
+
+            isCollapsed = new();
+            foreach (var letter in groupedByLetter)
+            {
+                isCollapsed.Add(false);
+            }
         }
         catch (FileNotFoundException)
         {
             brokenData = true;
         }
+    }
+
+    private void SwitchVerbose()
+    {
+        verbose = !verbose;
     }
 }
