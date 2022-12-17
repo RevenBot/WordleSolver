@@ -89,13 +89,13 @@ jobs:
         Configuration: ${{ matrix.configuration }}
         
     - name: Restore workloads
-      run: dotnet workload restore $env:Test_Project_Path -p:BlazorMode=BlazorHybrid -f net7.0-windows10.0.19041.0
+      run: dotnet workload restore $env:Solution_Name -p:BlazorMode=BlazorHybrid -f net7.0-windows10.0.19041.0
       
     - name: Build (To generate CSS/JS files)
-      run: dotnet build $env:Test_Project_Path -p:BlazorMode=BlazorHybrid -p:Configuration=Release -p:WindowsPackageType=None -p:SelfContained=true -p:WindowsAppSDKSelfContained=true -p:GenerateAppxPackageOnBuild=false -p:RuntimeIdentifier=win10-x64 -f net7.0-windows10.0.19041.0
+      run: dotnet build $env:Solution_Name -p:BlazorMode=BlazorHybrid -p:Configuration=Release -p:WindowsPackageType=None -p:SelfContained=true -p:WindowsAppSDKSelfContained=true -p:GenerateAppxPackageOnBuild=false -p:RuntimeIdentifier=win10-x64 -f net7.0-windows10.0.19041.0
   
     - name: Build exe
-      run: dotnet build $env:Test_Project_Path -p:BlazorMode=BlazorHybrid -p:Configuration=Release -p:WindowsPackageType=None -p:SelfContained=true -p:WindowsAppSDKSelfContained=true -p:GenerateAppxPackageOnBuild=false -p:RuntimeIdentifier=win10-x64 -f net7.0-windows10.0.19041.0
+      run: dotnet build $env:Solution_Name -p:BlazorMode=BlazorHybrid -p:Configuration=Release -p:WindowsPackageType=None -p:SelfContained=true -p:WindowsAppSDKSelfContained=true -p:GenerateAppxPackageOnBuild=false -p:RuntimeIdentifier=win10-x64 -f net7.0-windows10.0.19041.0
     
     - name: Upload artifact
       uses: actions/upload-artifact@v3
