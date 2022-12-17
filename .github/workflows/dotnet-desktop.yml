@@ -53,6 +53,8 @@ jobs:
       
       - name: Restore workloads
         run: dotnet workload restore $env:Solution_Path -p:BlazorMode=BlazorHybrid -f net7.0-windows10.0.19041.0
+      - name: Fix android missing at list
+        run: dotnet workload install android
 
       - name: Build (To generate CSS/JS files)
         run: dotnet build $env:Solution_Path -p:BlazorMode=BlazorHybrid -p:Configuration=Release -p:WindowsPackageType=None -p:SelfContained=true -p:WindowsAppSDKSelfContained=true -p:GenerateAppxPackageOnBuild=false -p:RuntimeIdentifier=win10-x86 -f net7.0-windows10.0.19041.0
