@@ -38,13 +38,13 @@ jobs:
       - name: Install .Net Core
         uses: actions/setup-dotnet@v3
         with:
-          dotnet-version: 6.0.x
+          dotnet-version: 7.0.x
 
       # Add  MsBuild to the PATH: https://github.com/microsoft/setup-msbuild
       - name: Setup MSBuild.exe
         uses: microsoft/setup-msbuild@v1.1
-        with:
-          msbuild-architecture: x64
+#         with:
+#           msbuild-architecture: x64
         
         
 #         Restore the application to populate the obj folder with RuntimeIdentifiers
@@ -62,10 +62,10 @@ jobs:
         run: dotnet workload install maui
 
       - name: Build (To generate CSS/JS files)
-        run: dotnet build $env:Solution_Path -p:BlazorMode=BlazorHybrid -p:Configuration=Release -p:WindowsPackageType=None -p:SelfContained=true -p:WindowsAppSDKSelfContained=true -p:GenerateAppxPackageOnBuild=false -p:RuntimeIdentifier=win10-x64 -f net7.0-windows10.0.19041.0
+        run: dotnet build $env:Solution_Path -p:BlazorMode=BlazorHybrid -p:Configuration=Release -p:WindowsPackageType=None -p:SelfContained=true -p:WindowsAppSDKSelfContained=true -p:GenerateAppxPackageOnBuild=false -p:RuntimeIdentifier=win10-x86 -f net7.0-windows10.0.19041.0
     
       - name: Build exe
-        run: dotnet build $env:Solution_Path -p:BlazorMode=BlazorHybrid -p:Configuration=Release -p:WindowsPackageType=None -p:SelfContained=true -p:WindowsAppSDKSelfContained=true -p:GenerateAppxPackageOnBuild=false -p:RuntimeIdentifier=win10-x64 -f net7.0-windows10.0.19041.0
+        run: dotnet build $env:Solution_Path -p:BlazorMode=BlazorHybrid -p:Configuration=Release -p:WindowsPackageType=None -p:SelfContained=true -p:WindowsAppSDKSelfContained=true -p:GenerateAppxPackageOnBuild=false -p:RuntimeIdentifier=win10-x86 -f net7.0-windows10.0.19041.0
     
       
         
