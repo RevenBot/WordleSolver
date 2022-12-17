@@ -23,7 +23,7 @@ jobs:
       # App_Packages_Archive: AppPackages.zip
       # App_Packages_Directory: AppPackages
       # SigningCertificate: GitHubActionsDemo.pfx
-      Solution_Path: WordleSolver.sln
+      Solution_Path: WordleSolver.csproj
       # Test_Project_Path: MyWpfApp.Tests\MyWpfApp.Tests.csproj
       # Wpf_Project_Path: MyWpfApp\MyWpfApp.csproj
       # Wap_Project_Directory: MyWpfApp.Package
