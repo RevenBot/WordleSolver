@@ -51,7 +51,7 @@ jobs:
 
     strategy:
       matrix:
-        configuration: [Debug, Release]
+        configuration: [ Release]
 
     runs-on: windows-latest  # For a list of available runner types, refer to
                              # https://help.github.com/en/actions/reference/workflow-syntax-for-github-actions#jobsjob_idruns-on
@@ -75,21 +75,21 @@ jobs:
         dotnet-version: 7.0.x
 
     # Add  MSBuild to the PATH: https://github.com/microsoft/setup-msbuild
-    - name: Setup MSBuild.exe
-      uses: microsoft/setup-msbuild@v1.0.2
+#     - name: Setup MSBuild.exe
+#       uses: microsoft/setup-msbuild@v1.0.2
 
     # Execute all unit tests in the solution
-    - name: Execute unit tests
-      run: dotnet test
+#     - name: Execute unit tests
+#       run: dotnet test
 
     # Restore the application to populate the obj folder with RuntimeIdentifiers
-    - name: Restore the application
-      run: msbuild $env:Solution_Name /t:Restore /p:Configuration=$env:Configuration
-      env:
-        Configuration: ${{ matrix.configuration }}
+#     - name: Restore the application
+#       run: msbuild $env:Solution_Name /t:Restore /p:Configuration=$env:Configuration
+#       env:
+#         Configuration: ${{ matrix.configuration }}
         
     - name: Restore workloads
-      run: dotnet workload restore $env:Solution_Name -p:BlazorMode=BlazorHybrid -f net7.0-windows10.0.19041.0
+      run: dotnet workload restore $env:Solution_Name 
       
     - name: Build (To generate CSS/JS files)
       run: dotnet build $env:Solution_Name -p:BlazorMode=BlazorHybrid -p:Configuration=Release -p:WindowsPackageType=None -p:SelfContained=true -p:WindowsAppSDKSelfContained=true -p:GenerateAppxPackageOnBuild=false -p:RuntimeIdentifier=win10-x64 -f net7.0-windows10.0.19041.0
@@ -101,7 +101,7 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
         name: my-artifact
-        path: src/Client/App/bin/release/net7.0-windows10.0.19041.0/win10-x86
+        path: src/Client/App/bin/release/net7.0-windows10.0.19041.0/win10-x64
         if-no-files-found: error # 'warn' or 'ignore' are also available, defaults to `warn`
     # Decode the base 64 encoded pfx and save the Signing_Certificate
 #     - name: Decode the pfx
