@@ -1,0 +1,19 @@
+﻿.active-row {
+    background-color: green;
+}
+
+.inactive-row {
+    background-color: orangered;
+}
+
+.letter-grey {
+    background-color: grey;
+}
+
+.letter-yellow {
+    background-color: yellow;
+}
+
+.letter-green {
+    background-color: greenyellow;
+}
