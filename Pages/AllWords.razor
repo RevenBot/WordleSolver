@@ -26,7 +26,7 @@ else
     <ol class="list-group list-group-numbered">
         @for (int i = 0; i < groupedByLetter.Count(); i++)
         {
-            IGrouping<char, IWord> groupedWords = groupedByLetter.ElementAt(i);
+            IGrouping<char, Word> groupedWords = groupedByLetter.ElementAt(i);
             <li class="list-group-item d-flex justify-content-between align-items-start">
                 <div class="ms-2 me-auto">
                     <div class="fw-bold">Letter <strong>@groupedWords.Key</strong>:</div>
@@ -56,7 +56,7 @@ else
 }
 
 @code {
-    private IEnumerable<IGrouping<char, IWord>> groupedByLetter;
+    private IEnumerable<IGrouping<char, Word>> groupedByLetter;
     private List<bool> isCollapsed;
     private bool brokenData = false;
     private bool verbose = false;
@@ -66,7 +66,7 @@ else
         Debug.WriteLine("Trying to read the txt file");
         try
         {
-            List<IWord> rawData = await ReadFileService.GetWordsListAsync("words.txt");
+            List<Word> rawData = await ReadFileServiceDeprecated.GetWordsListAsync("words.txt");
             groupedByLetter =
                 from word in rawData
                 group word by word.Value[0];
