@@ -27,10 +27,8 @@ public static class MauiProgram
 		builder.Logging.AddDebug();
 #endif
 
-		builder.Services.AddSingleton<WeatherForecastService>();
 		string dbPath = DbCheckService.Start(DbCheckService.nameDB);
 		builder.Services.AddSingleton<WordRepository>(s => ActivatorUtilities.CreateInstance<WordRepository>(s, dbPath));
-		builder.Services.AddSingleton<Board>();
 
 		return builder.Build();
 	}
