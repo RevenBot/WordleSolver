@@ -26,7 +26,7 @@ namespace WordleSolver.Data.Wordle
 			new Letter(),
 			new Letter()
 		};
-		public List<IWord> Words { get; set; }
+		public List<Word> Words { get; set; }
 
 		public void Calculate()
 		{
@@ -48,7 +48,7 @@ namespace WordleSolver.Data.Wordle
 
 		}
 
-		public void LoadData(List<IWord> words)
+		public void LoadData(List<Word> words)
 		{
 			Solver.LoadWords(words);
 			Words = words;
@@ -62,7 +62,7 @@ namespace WordleSolver.Data.Wordle
 			}
 		}
 
-		public void SetWord(IWord word)
+		public void SetWord(Word word)
 		{
 			for (int i = 0; i < word.Value.Length; i++)
 			{
