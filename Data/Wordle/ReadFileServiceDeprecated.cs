@@ -2,10 +2,10 @@
 
 namespace WordleSolver.Data.Wordle
 {
-	public static class ReadFileService
+	public static class ReadFileServiceDeprecated
 	{
-		private static List<IWord> wordsList = null;
-		public static async Task<List<IWord>> GetWordsListAsync(string path)
+		private static List<Word> wordsList = null;
+		public static async Task<List<Word>> GetWordsListAsync(string path)
 		{
 			if (wordsList != null)
 			{
@@ -18,7 +18,7 @@ namespace WordleSolver.Data.Wordle
 				using var stream = await FileSystem.OpenAppPackageFileAsync(path);
 				using var reader = new StreamReader(stream);
 				var data = await reader.ReadToEndAsync();
-				wordsList = new List<IWord>();
+				wordsList = new List<Word>();
 				foreach (string s in data.Split("\n"))
 				{
 					wordsList.Add(new Word(s));

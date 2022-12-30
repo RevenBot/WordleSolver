@@ -7,14 +7,14 @@ namespace WordleSolver.Data.Wordle
 		private List<char> charsNotIn = new List<char>();
 		private Dictionary<int, char> yellowChars = new Dictionary<int, char>();
 		private Dictionary<int, char> greenChars = new Dictionary<int, char>();
-		private List<IWord> words = new List<IWord>();
-		private List<IWord> previousWords = new List<IWord>();
+		private List<Word> words = new List<Word>();
+		private List<Word> previousWords = new List<Word>();
 		public List<char> CharsNotIn { get => charsNotIn; set => charsNotIn = value; }
 		public Dictionary<int, char> YellowChars { get => yellowChars; set => yellowChars = value; }
 		public Dictionary<int, char> GreenChars { get => greenChars; set => greenChars = value; }
-		public List<IWord> Words { get => words; set => words = value; }
-		public List<IWord> PreviousWords { get => previousWords; set => previousWords = value; }
-		public void LoadWords(List<IWord> wordsIN)
+		public List<Word> Words { get => words; set => words = value; }
+		public List<Word> PreviousWords { get => previousWords; set => previousWords = value; }
+		public void LoadWords(List<Word> wordsIN)
 		{
 			words = wordsIN;
 		}
@@ -41,7 +41,7 @@ namespace WordleSolver.Data.Wordle
 				);
 			words = temp.ToList();
 		}
-		public Task<List<IWord>> ExcludeCharsNotInAsync()
+		public Task<List<Word>> ExcludeCharsNotInAsync()
 		{
 			return Task.FromResult(words.Where(
 					x => x.Value.IndexOfAny(charsNotIn.ToArray()) == -1
@@ -57,7 +57,7 @@ namespace WordleSolver.Data.Wordle
 				);
 			words = temp.ToList();
 		}
-		public Task<List<IWord>> ExcludeYellowCharsAsync()
+		public Task<List<Word>> ExcludeYellowCharsAsync()
 		{
 			return Task.FromResult(
 				words.Where(x => CheckYellow(x)
@@ -65,7 +65,7 @@ namespace WordleSolver.Data.Wordle
 				);
 		}
 
-		private bool CheckYellow(IWord x)
+		private bool CheckYellow(Word x)
 		{
 			foreach (var ychar in yellowChars)
 			{
@@ -87,7 +87,7 @@ namespace WordleSolver.Data.Wordle
 				);
 			words = temp.ToList();
 		}
-		public Task<List<IWord>> CharGreenInWordAsync()
+		public Task<List<Word>> CharGreenInWordAsync()
 		{
 			return Task.FromResult(
 				words.Where(x => CheckGreen(x))
@@ -95,7 +95,7 @@ namespace WordleSolver.Data.Wordle
 				);
 		}
 
-		private bool CheckGreen(IWord x)
+		private bool CheckGreen(Word x)
 		{
 			foreach (var gchar in greenChars)
 			{

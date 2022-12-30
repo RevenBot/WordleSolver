@@ -1,6 +1,9 @@
 ﻿using CommunityToolkit.Maui;
 using Microsoft.Extensions.Logging;
 using WordleSolver.Data;
+using WordleSolver.Data.Wordle;
+using WordleSolver.Services.DbService;
+using WordleSolver.Services.DbServices;
 
 namespace WordleSolver;
 
@@ -24,8 +27,8 @@ public static class MauiProgram
 		builder.Logging.AddDebug();
 #endif
 
-
-		//builder.Services.AddSingleton<ReadFileService>();
+		string dbPath = DbCheckService.Start(DbCheckService.nameDB);
+		builder.Services.AddSingleton<WordRepository>(s => ActivatorUtilities.CreateInstance<WordRepository>(s, dbPath));
 
 		return builder.Build();
 	}
