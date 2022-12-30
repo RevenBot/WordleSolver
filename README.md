@@ -6,8 +6,10 @@ It is an app built in MAUI to search the wordle.
 
 ## Table of contents
 
-* [Technologies](https://linktodocumentation)
-* [Setup](https://linktodocumentation)
+* [Technologies](https://github.com/RevenBot/WordleSolver#technologies)
+* [Setup](https://github.com/RevenBot/WordleSolver#technologies)
+* [Features](https://github.com/RevenBot/WordleSolver#features)
+* [Feedback](https://github.com/RevenBot/WordleSolver#feedback)
 
 
 ## Technologies
@@ -34,19 +36,10 @@ Install dependencies
   dotnet workload install maui
 ```
 
-Start the server
+Build the app
 
 ```bash
-  dotnet run
-```
-
-
-## Deployment
-
-To deploy this project run
-
-```bash
-  npm run deploy
+  dotnet build WordleSolver.csproj -f|--framework <FRAMEWORK>
 ```
 
 
@@ -59,8 +52,7 @@ To deploy this project run
 
 ## Feedback
 
-If you have any feedback, please reach out to us at fake@fake.com
-
+If you have any feedback, please reach out to us at revenbot@proton.me
 
 ## Authors
 
@@ -73,4 +65,7 @@ This project is used by the following users:
 
 - [@aiuola](https://github.com/Aiuola)
 
+## License
+
+[MIT](https://github.com/RevenBot/WordleSolver/blob/master/LICENSE.txt)
 
