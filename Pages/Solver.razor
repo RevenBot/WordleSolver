@@ -2,19 +2,19 @@
 @using System.Diagnostics;
 @using WordleSolver.Data.Wordle;
 <h1>SOLVER!</h1>
-    <button @onclick="()=>board.Reset()">Reset Data</button>
-    @foreach (var row in board.Rows)
-    {
-        <div class="containerRows @row.CssClass">
-            <button @onclick="()=>board.EnterWord(row)">Insert Text</button>
-            @foreach (var cell in row.Letters)
-            {
+<button @onclick="()=>{board.Reset();Reload();}">Reset Data</button>
+@foreach (var row in board.Rows)
+{
+    <div class="containerRows @row.CssClass">
+        <button @onclick="()=>board.EnterWord(row)">Insert Text</button>
+        @foreach (var cell in row.Letters)
+        {
 
-                <button class="inner @cell.CssClass" @onclick="()=>row.ClickedCell(cell)">@cell.Value</button>
-            }
-            <button @onclick="()=>board.Calculate(row)">Find</button>
-        </div>
-    }
+            <button class="inner @cell.CssClass" @onclick="()=>row.ClickedCell(cell)">@cell.Value</button>
+        }
+        <button @onclick="()=>{board.Calculate(row);Reload();}">Find</button>
+    </div>
+}
 
 @if (board.Words == null)
 {
@@ -47,7 +47,7 @@ else
                         </ul>
 
                     }
-                    else 
+                    else
                     {
                         <p>
                             This list is currenty collapsed!
@@ -64,11 +64,32 @@ else
 }
 
 @code {
+    IBoard board = new Board();
+    protected override async Task OnInitializedAsync()
+    {
+        await board.LoadData();
+        Reload();
+    }
+    List<PepegaWords> pepegaAiuolas = new();
+    public void Reload()
+    {
+        pepegaAiuolas.Clear();
+        IEnumerable<IGrouping<char, Word>> groupedByLetter;
+        groupedByLetter =
+                       from word in board.Words
+                       group word by word.Value[0];
+        for (int i = 0; i < groupedByLetter.Count(); i++)
+        {
+            pepegaAiuolas.Add(new PepegaWords(groupedByLetter.ElementAt(i)));
+
+        }
+        Debug.WriteLine("reloaded");
+    }
     class PepegaWords
     {
         public bool IsCollapsed { set; get; } = false;
-        public IGrouping<char,Word> Group{ get; set; }
-        public PepegaWords(IGrouping<char,Word> group)
+        public IGrouping<char, Word> Group { get; set; }
+        public PepegaWords(IGrouping<char, Word> group)
         {
             Group = group;
         }
@@ -77,20 +98,5 @@ else
             IsCollapsed = !IsCollapsed;
         }
     }
-    IBoard board = new Board();
-    private List<PepegaWords> pepegaAiuolas = new();
-    protected override async Task OnInitializedAsync()
-    {
-        await board.LoadData();
-        IEnumerable<IGrouping<char, Word>> groupedByLetter;
-        groupedByLetter =
-                       from word in board.Words
-                       group word by word.Value[0];
-        for (int i = 0; i < groupedByLetter.Count(); i++)
-        {
-        pepegaAiuolas.Add(new PepegaWords(groupedByLetter.ElementAt(i)));
-            
-        }
-
-    }
+   
 }
