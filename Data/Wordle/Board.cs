@@ -85,7 +85,7 @@ namespace WordleSolver.Data.Wordle
 
         public async Task Reset()
         {
-            await LoadDataDeprecated();
+            await LoadData();
             Rows = new List<IRow>()
             {
                 new Row(){IsActive = true},
@@ -97,5 +97,15 @@ namespace WordleSolver.Data.Wordle
             };
         }
 
+        public void ClickedWord(Word word)
+        {
+            foreach (var item in Rows)
+            {
+                if( item.IsActive)
+                {
+                    item.SetWord(word);
+                }
+            }
+        }
     }
 }
