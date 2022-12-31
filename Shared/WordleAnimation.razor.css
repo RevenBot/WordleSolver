@@ -3,7 +3,7 @@
     display: grid;
     grid-template-columns: repeat(6, 1fr);
     grid-gap: 2px;
-    margin-top : 15px;
+    margin-top: 15px;
 }
 
 .inner {
@@ -21,13 +21,33 @@
 .flip {
     animation: flip 500ms ease forwards;
 }
-.flipyellow {
-    animation: flipyellow 500ms ease forwards;
+
+@media only screen and (max-width: 768px) {
+    /* For mobile phones: */
+    .container {
+        width: 100%;
+        display: grid;
+        grid-template-columns: repeat(6, 1fr);
+        margin-top: 5px;
+    }
+
+    .inner {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 30px;
+        color: black;
+        width: 50px;
+        height: 50px;
+        border: 2px solid black;
+        border-radius: 6px;
+    }
 }
 
-.unflip{
-    animation: unflip 500ms ease backwards;
+.unflip {
+    animation: unflip 500ms ease forwards;
 }
+
 @keyframes flip {
     0% {
         transform: scaleY(1);
@@ -43,6 +63,7 @@
         background: var(--loading-fill-from, rgb(105,105,105));
     }
 }
+
 @keyframes unflip {
     0% {
         background: var(--loading-fill-from, rgb(105,105,105));
