@@ -40,7 +40,7 @@
 }
 
 @media only screen and (max-width: 768px) {
-    /* For mobile phones: AndroinTested */
+    /* For mobile phones: */
     .containerRows {
         width: 100%;
         display: grid;
