@@ -1,51 +1,98 @@
 ﻿@page "/solver"
-<h3>Nuts</h3>
+@using System.Diagnostics;
 @using WordleSolver.Data.Wordle;
-<button @onclick="()=>board.Reset()">Reset Data</button>
-<table id="table">
-    <tbody>
-        @foreach (var row in board.Rows)
-        {
-            <tr class="@row.CssClass">
-                <td scope="col">
-                    <button @onclick="()=>board.EnterWord(row)">Insert Text</button>
-                </td>
-                @foreach (var cell in row.Letters)
-                {
-                    <td>
+<WordleAnimation Wordle="Solver" />
+<div>
+    <button @onclick="()=>board.Reset()">Reset Data</button>
+    @foreach (var row in board.Rows)
+    {
+        <div class="container @row.CssClass">
+            <button @onclick="()=>board.EnterWord(row)">Insert Text</button>
+            @foreach (var cell in row.Letters)
+            {
 
-                        <button class="@cell.CssClass" @onclick="()=>row.ClickedCell(cell)">@cell.Value</button>
-                    </td>
-                }
-                <td>
-                    <button @onclick="()=>board.Calculate(row)">Calculate</button>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
-<br />
+                <button class="inner @cell.CssClass" @onclick="()=>row.ClickedCell(cell)">@cell.Value</button>
+            }
+            <button @onclick="()=>board.Calculate(row)">Calculate</button>
+        </div>
+    }
+
+</div>
 @if (board.Words == null)
 {
     <p>
-        Loading...maybe 
+        Loading...maybe
     </p>
 }
 else
 {
-    @foreach (var item in board.Words)
-    {
-        <p>
-            @item.Value
-        </p>
-    }
+    <ol class="list-group list-group-numbered">
+        @foreach (var aiuola in pepegaAiuolas)
+        {
+            <li class="list-group-item d-flex justify-content-between align-items-start">
+                <div class="ms-2 me-auto">
+                    <div class="fw-bold">
+                        Letter <strong> @aiuola.Group.Key </strong>:
+
+                        <input type="checkbox" name="check" id="check" checked="checked" @onchange="()=>aiuola.BigPepega()" />
+                    </div>
+                    @if (aiuola.IsCollapsed)
+                    {
+                        <ul class="list-group">
+
+                            @foreach (var word in aiuola.Group)
+                            {
+                                <li class="list-group-item" @onclick="()=>board.ClickedWord(word)">
+                                    @word.Value
+                                </li>
+                            }
+                        </ul>
+
+                    }
+                    else 
+                    {
+                        <p>
+                            This list is currenty collapsed!
+                            It would contain <strong>@aiuola.Group.Count()</strong> elements
+                        </p>
+                    }
+
+                </div>
+                <span class="badge bg-primary rounded-pill">@aiuola.Group.Count()</span>
+            </li>
+
+        }
+    </ol>
 }
 
 @code {
+    class PepegaWords
+    {
+        public bool IsCollapsed { set; get; } = false;
+        public IGrouping<char,Word> Group{ get; set; }
+        public PepegaWords(IGrouping<char,Word> group)
+        {
+            Group = group;
+        }
+        public void BigPepega()
+        {
+            IsCollapsed = !IsCollapsed;
+        }
+    }
     IBoard board = new Board();
+    private List<PepegaWords> pepegaAiuolas = new();
     protected override async Task OnInitializedAsync()
     {
         await board.LoadData();
-    }
+        IEnumerable<IGrouping<char, Word>> groupedByLetter;
+        groupedByLetter =
+                       from word in board.Words
+                       group word by word.Value[0];
+        for (int i = 0; i < groupedByLetter.Count(); i++)
+        {
+        pepegaAiuolas.Add(new PepegaWords(groupedByLetter.ElementAt(i)));
+            
+        }
 
+    }
 }

@@ -17,3 +17,22 @@
 .letter-green {
     background-color: greenyellow;
 }
+.container {
+    width: 400px;
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    grid-gap: 2px;
+    margin-top: 5px;
+}
+
+.inner {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 40px;
+    color: black;
+    width: 50px;
+    height: 50px;
+    border: 2px solid black;
+    border-radius: 6px;
+}
