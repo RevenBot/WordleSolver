@@ -7,6 +7,7 @@ function applyUnFlip() {
     tilesArray.map(function (tile, i) {
         tile.classList.remove("flip")
         tile.classList.add("unflip")
+        tile.style.setProperty('--loading-fill-from', "")
         tile.style.animationDelay = `${i * 100}ms`;
     });
     setTimeout(applyFlip, 4000);

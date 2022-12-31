@@ -1,23 +1,21 @@
 ﻿@page "/solver"
 @using System.Diagnostics;
 @using WordleSolver.Data.Wordle;
-<WordleAnimation Wordle="Solver" />
-<div>
+<h1>SOLVER!</h1>
     <button @onclick="()=>board.Reset()">Reset Data</button>
     @foreach (var row in board.Rows)
     {
-        <div class="container @row.CssClass">
+        <div class="containerRows @row.CssClass">
             <button @onclick="()=>board.EnterWord(row)">Insert Text</button>
             @foreach (var cell in row.Letters)
             {
 
                 <button class="inner @cell.CssClass" @onclick="()=>row.ClickedCell(cell)">@cell.Value</button>
             }
-            <button @onclick="()=>board.Calculate(row)">Calculate</button>
+            <button @onclick="()=>board.Calculate(row)">Find</button>
         </div>
     }
 
-</div>
 @if (board.Words == null)
 {
     <p>
