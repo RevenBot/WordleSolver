@@ -72,7 +72,6 @@ namespace WordleSolver.Data.Wordle
         }
         public async Task LoadData()
         {
-            if (Words == null)
                 try
                 {
                     Words = await App.WordRepo.GetAllWords();
