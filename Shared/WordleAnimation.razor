@@ -1,0 +1,18 @@
+﻿@inject IJSRuntime JsRuntime
+<div class="container">
+    @foreach (var l in Wordle)
+    {
+        <div class="inner">@l</div>
+    }
+</div>
+
+
+@code {
+    [Parameter]
+    public string Wordle { get; set; }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        await JsRuntime.InvokeVoidAsync("AnimationJSFunctions.start");
+    }
+}
