@@ -10,5 +10,6 @@
 		public Task LoadDataDeprecated();
 		public Task Reset();
 		public Task EnterWord(IRow row);
+		public void ClickedWord(Word word);
 	}
 }
