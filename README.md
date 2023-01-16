@@ -58,13 +58,6 @@ If you have any feedback, please reach out to us at revenbot@proton.me
 
 - [@revenbot](https://github.com/RevenBot/AntiWordle)
 
-
-## Used By
-
-This project is used by the following users:
-
-- [@aiuola](https://github.com/Aiuola)
-
 ## License
 
 [MIT](https://github.com/RevenBot/WordleSolver/blob/master/LICENSE.txt)
